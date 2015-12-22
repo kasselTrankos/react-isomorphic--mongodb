@@ -22,6 +22,13 @@ app.use(proxy({
 	match: /^\/api\/github\//i,
 	map: (path) => path.replace(/^\/api\/github\//i, "/")
 }));
+////proxy for twiiter
+app.use(proxy({
+	host: "https://api.twitter.com",
+	match: /^\/api\/twitter\//i,
+	map: (path) => path.replace(/^\/api\/twitter\//i, "/")
+}));
+
 
 app.use(function *(next) {
 	const location = createLocation(this.path);

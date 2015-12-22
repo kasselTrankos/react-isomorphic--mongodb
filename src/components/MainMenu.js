@@ -6,30 +6,13 @@ export default class MenuMenu extends React.Component {
 
   render(){
     return (
-      <InlineCss stylesheet={`
-                & .card {
-                    cursor: pointer;
-                    margin: 15px;
-                    padding: 15px;
-                    text-align: center;
-                    height: 200px;
-                }
-                & img {
-                    width: 130px;
-                    height: 130px;
-                }
-                & p {
-                    margin: 10px;
-                }
-                `}>
-      <div stylesheet="{stylesheet}">
+      <div className="row">
         <h1>React Isomorphic  ::: A clear mount of menu</h1>
-        <ul>
-          <li><Link to="/" activeStyle={ACTIVE}>/</Link></li>
-          <li><Link to="/about" activeStyle={ACTIVE}>/about</Link></li>
-        </ul>
+        <ol className="breadcrumb">
+          <li><Link to="/" activeStyle={ACTIVE}>Home</Link></li>
+          <li><Link to="/about" activeStyle={ACTIVE}>About</Link></li>
+        </ol>
       </div>
-      </InlineCss>
     );
   }
 };

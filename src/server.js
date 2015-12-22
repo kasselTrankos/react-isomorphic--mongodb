@@ -15,6 +15,7 @@ const hostname = process.env.HOSTNAME || "localhost";
 const port     = process.env.PORT || 8001;
 
 app.use(serve("static", {defer: true}));
+app.use(serve("bower_components/bootstrap/dist"), {defer:true});
 
 app.use(proxy({
 	host: "https://api.github.com",
@@ -45,6 +46,7 @@ app.use(function *(next) {
 						<head>
 							<meta charset="utf-8">
 							<title>react-isomorphic-starterkit</title>
+							<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 							<link rel="shortcut icon" href="/favicon.ico">
 						</head>
 						<body>

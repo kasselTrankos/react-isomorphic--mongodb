@@ -25,7 +25,12 @@ module.exports = {
 			{test: /\.json$/, loaders: ["json"]},
 			{test: /\.js$/,
 				loaders: ["babel?cacheDirectory&presets[]=es2015&presets[]=react&presets[]=stage-0"],
-				exclude: /(node_modules|bower_components)/}
+				exclude: /(node_modules|bower_components)/
+			},{
+				test: /\.scss$/,
+				loaders: ["style", "css", "sass"],
+				include: /src/,
+			}
 		],
 		postLoaders: [],
 		noParse: /\.min\.js/

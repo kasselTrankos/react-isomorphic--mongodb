@@ -1,0 +1,21 @@
+{
+  "name": "isomorphic-beginner",
+  "description": "",
+  "main": "babel.server.js",
+  "authors": [
+    "kasselTrankos <alvaro.touzon@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/kasselTrankos/react-mongodb",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

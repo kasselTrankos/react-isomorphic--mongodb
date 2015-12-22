@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from 'react-router';
 import InlineCss from "react-inline-css";
 const ACTIVE = {color :'red'};
-export default class Menu extends React.Component {
+export default class MenuMenu extends React.Component {
 
   render(){
     return (

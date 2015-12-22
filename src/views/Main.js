@@ -2,7 +2,7 @@ import __fetch from "isomorphic-fetch";
 import React from "react";
 import InlineCss from "react-inline-css";
 import Transmit from "react-transmit";
-import Menu from "../components/MainMenu";
+
 /**
  * Main React application entry-point for both the server and client.
  */
@@ -58,11 +58,7 @@ class Main extends React.Component {
 
 		return (
 
-			<InlineCss stylesheet={Main.css(avatarSize)} namespace="Main">
-
-				<p>Hola</p>
-				<Menu></Menu>
-			</InlineCss>
+			<p>Home</p>
 		);
 	}
 	/**

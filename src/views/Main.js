@@ -75,15 +75,12 @@ class Main extends React.Component {
  */
 export default Transmit.createContainer(Main, {
 	initialVariables: {
-		nextPage:       1,
-		pagesToFetch:   15,
-		prevStargazers: []
 	},
 	fragments: {
 		/**
 		 * Return a Promise of the previous stargazers + the newly fetched stargazers.
 		 */
-		stargazers ({nextPage, pagesToFetch, prevStargazers}) {
+		stargazers () {
 
 			/**
 			 * On the server, connect to GitHub directly.

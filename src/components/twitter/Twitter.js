@@ -1,13 +1,10 @@
 import React from "react";
 import Transmit from "react-transmit";
-var  Promise = require("bluebird");
-import {SessionModel} from "./model/TwitterModel";
+
 
 const Twitter = React.createClass({
   componentWillMount(){
-    //Buscar como hacer un fetch de Backbone como un model.
-    ///la missssma filosofia que hay para Extjs, joder ahi lo robo!!!
-    
+
 
   },
   render() {

@@ -9,7 +9,8 @@ npm i
 bower install
 ```
 
-Uses Bluebird, for promises.
+He intentado usa los modelos/colecciones de backbone, sin embargo no en el lado servidor, debo investigar como se hace.
 
-En produccion solo necesita un servidor!!!.
+Uses Bluebird, for promises.
+When changes variable envoirement to producction, that application only need one server to offer it.
 Uses MongoDB.

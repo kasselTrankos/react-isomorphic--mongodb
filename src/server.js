@@ -10,7 +10,7 @@ import {createLocation} from "history";
 import Transmit from "react-transmit";
 
 import routes from "views/routes";
-import route from 'koa-router';
+
 
 
 const app      = koa();
@@ -26,17 +26,6 @@ app.use(proxy({
 	match: /^\/api\/github\//i,
 	map: (path) => path.replace(/^\/api\/github\//i, "/")
 }));
-/*app.use(proxy({
-	host: "https://twitter",
-	map: function(path) {
-		var pt= '/twitter'+path;
-
-		console.log(pt);
-
-		return pt;
-	 }
-}));
-*/
 
 app.use(function *(next) {
 	const location = createLocation(this.path);

@@ -7,16 +7,18 @@ export default class Base extends React.Component {
     return (
       <div className="row">
         <div className="row">
-          <div className="col-md-2">&nbsp;</div>
-          <div className="col-md-8"><MainMenu></MainMenu></div>
+          <div className="col-xs-2">&nbsp;</div>
+          <div className="col-xs-8"><MainMenu></MainMenu></div>
+          <div className="col-xs-2">&nbsp;</div>
         </div>
         <div className="row">
-          <div className="col-md-3"></div>
-          <div className="col-md-6"><Twitter></Twitter></div>
+          <div className="col-xs-2">&nbsp;</div>
+          <div className="col-xs-8"><Twitter></Twitter></div>
+          <div className="col-xs-2">&nbsp;</div>
         </div>
         <div className="row">
-          <div className="col-md-2">&nbsp;</div>
-          <div className="col-md-8">{this.props.children}</div>
+          <div className="col-xs-2">&nbsp;</div>
+          <div className="col-xs-8">{this.props.children}</div>
         </div>
       </div>
     );

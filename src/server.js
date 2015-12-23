@@ -1,7 +1,9 @@
+import https from "https";
 import koa from "koa";
 import proxy from "koa-proxy";
 import serve from "koa-static";
 import session from "koa-session";
+import {Twitter} from "common/Twitter"
 
 import React from "react";
 import ReactDOM from "react-dom/server";
@@ -16,6 +18,8 @@ import routes from "views/routes";
 const app      = koa();
 const hostname = process.env.HOSTNAME || "localhost";
 const port     = process.env.PORT || 8001;
+
+
 app.keys = ['some secret hurr'];
 app.use(serve("static", {defer: true}));
 app.use(serve("bower_components/bootstrap/dist"), {defer:true});
@@ -26,21 +30,16 @@ app.use(proxy({
 	match: /^\/api\/github\//i,
 	map: (path) => path.replace(/^\/api\/github\//i, "/")
 }));
-
+Twitter.oauth();
 app.use(function *(next) {
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
 
 	yield ((callback) => {
-		var  twitterResponse = null;
-		if(location.pathname==='/twitter'){
-			twitterResponse = [
-					{name: 'Hello World', id:1},
-					{name: 'Juan Palomo', id:2}
-				];
-			this.body = twitterResponse;
 
-		}
+
+		let twitterResponse = Twitter.use(this, location);
+
 		match({routes, location}, (error, redirectLocation, renderProps) => {
 
 			if (redirectLocation) {

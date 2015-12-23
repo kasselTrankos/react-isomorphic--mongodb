@@ -32,10 +32,13 @@ class Main extends React.Component {
 		const {stargazers} = this.props;
 
 		return (
-			<div>
-					{stargazers && stargazers.map((user) =>
-						<p key={user.id}>{user.name}</p>
-					)}
+			<div className="row">
+			<br />
+				<ul className="list-group">
+						{stargazers && stargazers.map((user) =>
+							<li className="list-group-item" key={user.id}>{user.name}</li>
+						)}
+				</ul>
 			</div>
 		);
 	}

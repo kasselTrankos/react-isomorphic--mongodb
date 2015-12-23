@@ -27,7 +27,6 @@ export default Transmit.createContainer(Twitter, {
 	},
 	fragments: {
 		twitterSession () {
-      console.log();
       let host = Vars.host();
       //
 			let urlSession = `${host}/twitter`;

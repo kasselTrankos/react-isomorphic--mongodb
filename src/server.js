@@ -30,7 +30,7 @@ app.use(proxy({
 	match: /^\/api\/github\//i,
 	map: (path) => path.replace(/^\/api\/github\//i, "/")
 }));
-Twitter.oauth();
+Twitter.OAuth();
 app.use(function *(next) {
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";

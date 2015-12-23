@@ -11,45 +11,20 @@ class Main extends React.Component {
 	 * Runs on server and client.
 	 */
 	componentWillMount () {
-		if (__SERVER__) {
-			/**
-			 * This is only run on the server, and will be removed from the client build.
-			 */
+		if (__SERVER__)
 			console.log("Hello server");
-		}
 
-		if (__CLIENT__) {
-			/**
-			 * This is only run on the client.
-			 */
+		if (__CLIENT__)
 			console.log("Hello client");
 
-			/**
-			 * Recursive function to transmit the rest of the stargazers on the client.
-			 */
-			/*const transmitRemainingStargazers = () => {
-				if (!this.props.transmit.variables.pagesToFetch > 0) {
-					return;
-				}
 
-				this.props.transmit.forceFetch({
-					prevStargazers: this.props.stargazers,
-					nextPage:       this.props.transmit.variables.nextPage + 1,
-					pagesToFetch:   this.props.transmit.variables.pagesToFetch - 1
-				}).then(transmitRemainingStargazers);
-			};
 
-			transmitRemainingStargazers();*/
-		}
 	}
 
 	/**
 	 * Runs on server and client.
 	 */
 	render () {
-		const repositoryUrl = "https://github.com/RickWong/react-isomorphic-starterkit";
-		const avatarSize    = 32;
-		const avatarUrl     = (id) => `https://avatars.githubusercontent.com/u/${id}?v=3&s=${avatarSize}`;
 
 		/**
 		 * This is a Transmit fragment.
@@ -57,8 +32,11 @@ class Main extends React.Component {
 		const {stargazers} = this.props;
 
 		return (
-
-			<p>Home</p>
+			<div>
+					{stargazers && stargazers.map((user) =>
+						<p key={user.id}>{user.name}</p>
+					)}
+			</div>
 		);
 	}
 	/**
@@ -98,7 +76,7 @@ class Main extends React.Component {
 export default Transmit.createContainer(Main, {
 	initialVariables: {
 		nextPage:       1,
-		pagesToFetch:   2,
+		pagesToFetch:   15,
 		prevStargazers: []
 	},
 	fragments: {
@@ -106,42 +84,35 @@ export default Transmit.createContainer(Main, {
 		 * Return a Promise of the previous stargazers + the newly fetched stargazers.
 		 */
 		stargazers ({nextPage, pagesToFetch, prevStargazers}) {
+
 			/**
 			 * On the server, connect to GitHub directly.
 			 */
-			let githubApi = "https://api.github.com";
-
+			let urlSession = `http://localhost:8001/twitter`;
+			if (__SERVER__)console.log(' callled before????');
 			/**
 			 * On the client, connect to GitHub via the proxy route.
 			 */
-			if (__CLIENT__) {
+			/*if (__CLIENT__) {
 				const {hostname, port} = window.location;
 				githubApi = `http://${hostname}:${port}/api/github`;
-
-			}
+			}*/
 
 			/**
 			 * Load a few stargazers using the Fetch API.
 			 */
 			return fetch(
-				githubApi + "/repos/RickWong/react-isomorphic-starterkit/stargazers" +
-				`?per_page=100&page=${nextPage}`
+				urlSession
 			).then((response) => response.json()).then((body) => {
 				/**
 				 * Stop fetching if the response body is empty.
 				 */
-				if (!body || !body.length) {
-					pagesToFetch = 0;
 
-					return prevStargazers;
-				}
 
 				/**
 				 * Pick id and username from fetched stargazers.
 				 */
-				const fechedStargazers = body.map(({id, login}) => ({id, login}));
-
-				return prevStargazers.concat(fechedStargazers);
+				return body;
 			}).catch((error) => {
 				console.error(error);
 			});

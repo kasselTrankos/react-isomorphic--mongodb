@@ -1,6 +1,7 @@
 import koa from "koa";
 import proxy from "koa-proxy";
 import serve from "koa-static";
+import session from "koa-session";
 
 import React from "react";
 import ReactDOM from "react-dom/server";
@@ -9,44 +10,68 @@ import {createLocation} from "history";
 import Transmit from "react-transmit";
 
 import routes from "views/routes";
+import route from 'koa-router';
+
 
 const app      = koa();
 const hostname = process.env.HOSTNAME || "localhost";
 const port     = process.env.PORT || 8001;
-
+app.keys = ['some secret hurr'];
 app.use(serve("static", {defer: true}));
 app.use(serve("bower_components/bootstrap/dist"), {defer:true});
+app.use(session(app));
 
 app.use(proxy({
 	host: "https://api.github.com",
 	match: /^\/api\/github\//i,
 	map: (path) => path.replace(/^\/api\/github\//i, "/")
 }));
-////proxy for twiiter
-app.use(proxy({
-	host: "https://api.twitter.com",
-	match: /^\/api\/twitter\//i,
-	map: (path) => path.replace(/^\/api\/twitter\//i, "/")
-}));
+/*app.use(proxy({
+	host: "https://twitter",
+	map: function(path) {
+		var pt= '/twitter'+path;
 
+		console.log(pt);
+
+		return pt;
+	 }
+}));
+*/
 
 app.use(function *(next) {
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
 
 	yield ((callback) => {
+		var  twitterResponse = null;
+		if(location.pathname==='/twitter'){
+			twitterResponse = [
+					{name: 'Hello World', id:1},
+					{name: 'Juan Palomo', id:2}
+				];
+			this.body = twitterResponse;
+
+		}
 		match({routes, location}, (error, redirectLocation, renderProps) => {
+
 			if (redirectLocation) {
 				this.redirect(redirectLocation.pathname + redirectLocation.search, "/");
 				return;
 			}
 
 			if (error || !renderProps) {
+
 				callback(error);
 				return;
 			}
 
 			Transmit.renderToString(RoutingContext, renderProps).then(({reactString, reactData}) => {
+				if(twitterResponse!==null) {
+					twitterResponse.map((item)=>{
+						reactData.push(item);
+					});
+
+				}
 				let template = (
 						`<!doctype html>
 					<html lang="en-us">

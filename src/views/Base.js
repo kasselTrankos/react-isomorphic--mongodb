@@ -1,5 +1,5 @@
 import React from "react";
-import MainMenu from "../components/MainMenu";
+import {MainMenu} from "../components/MainMenu";
 import {Twitter} from "../components/twitter/Twitter";
 
 export default class Base extends React.Component {

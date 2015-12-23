@@ -1,12 +1,10 @@
 import React from "react";
 import Transmit from "react-transmit";
+import {Vars} from "../../common/Common";
 
-
-const Twitter = React.createClass({
+class Twitter extends React.Component {
   componentWillMount(){
-
-
-  },
+  }
   render() {
     return (
       <form className="form-inline">
@@ -22,5 +20,25 @@ const Twitter = React.createClass({
       </form>
     );
   }
+}
+
+export default Transmit.createContainer(Twitter, {
+	initialVariables: {
+	},
+	fragments: {
+		twitterSession () {
+      console.log();
+      let host = Vars.host();
+      //
+			let urlSession = `${host}/twitter`;
+			return fetch(
+				urlSession
+			).then((response) => response.json()).then((body) => {
+
+				return body;
+			}).catch((error) => {
+				console.error(error);
+			});
+		}
+	}
 });
-export {Twitter}

@@ -77,38 +77,12 @@ export default Transmit.createContainer(Main, {
 	initialVariables: {
 	},
 	fragments: {
-		/**
-		 * Return a Promise of the previous stargazers + the newly fetched stargazers.
-		 */
 		stargazers () {
-
-			/**
-			 * On the server, connect to GitHub directly.
-			 */
 			let urlSession = `http://localhost:8001/twitter`;
-			if (__SERVER__)console.log(' callled before????');
-			/**
-			 * On the client, connect to GitHub via the proxy route.
-			 */
-			/*if (__CLIENT__) {
-				const {hostname, port} = window.location;
-				githubApi = `http://${hostname}:${port}/api/github`;
-			}*/
-
-			/**
-			 * Load a few stargazers using the Fetch API.
-			 */
 			return fetch(
 				urlSession
 			).then((response) => response.json()).then((body) => {
-				/**
-				 * Stop fetching if the response body is empty.
-				 */
 
-
-				/**
-				 * Pick id and username from fetched stargazers.
-				 */
 				return body;
 			}).catch((error) => {
 				console.error(error);

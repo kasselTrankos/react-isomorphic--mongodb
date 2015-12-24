@@ -31,31 +31,17 @@ app.use(proxy({
 	match: /^\/api\/github\//i,
 	map: (path) => path.replace(/^\/api\/github\//i, "/")
 }));
-let access_token = null;
-MongoDB.findAccessTokenPrevious()
-	.then((doc)=>{
 
-		if(doc){console.log(doc);
-			access_token = doc.access_token;
-		}else{
-			Twitter.OAuth()
-			.then((accessToken)=>{
-				access_token = accessToken
-			})
-			.catch((err)=>{
-				console.log("errror cuando intento conectarme a outh", err);
-			});
-		}
-	})
-	.catch((err)=>{
-		console.log('Existe previo', err);
-	});
+let access_token = Twitter.Token();
 
 
 app.use(function *(next) {
+
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
-
+	////juntando promises and yield looks great
+	yield access_token = access_token;
+	console.log(access_token, ' by here ibn cliente 	');
 	yield ((callback) => {
 				let twitterResponse = Twitter.use(this, location);
 

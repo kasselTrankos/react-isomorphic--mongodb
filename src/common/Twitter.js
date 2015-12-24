@@ -1,11 +1,35 @@
 var OAuth = require('oauth');
 import https from "https";
+import {MongoDB} from "./MongoDB";
 
 import Q from "q";
 
 const twitterConsumerKey = 'YcsBUJYAH5LYXUkFFHJWQxqIk';
 const twitterConsumerSecret = 'PCArQ1hqitctQOG1JY2OHiOvBLbuuYRaFRWsp0aBeedZkDx0zn';
 const Twitter = {
+  Token(){
+    return this.getAccessToken();
+  },
+  getAccessToken(){
+    return MongoDB.findAccessTokenPrevious()
+    	.then((doc)=>{
+    		if(doc){
+    			return doc;
+    		}else{
+    			OAuth()
+    			.then((access_token)=>{
+    				return {access_token: access_token};
+    			})
+    			.catch((err)=>{
+    				console.log("errror cuando intento conectarme a outh", err);
+    			});
+    		}
+    	})
+    	.catch((err)=>{
+    		console.log('Existe previo!!!', err);
+    });
+    //return {hh:10};
+  },
   use(koa, location){
     if(/^\/twitter$/i.test(location.pathname)){
       if(koa.request.method==='GET')  return __Twitter.Get(koa);

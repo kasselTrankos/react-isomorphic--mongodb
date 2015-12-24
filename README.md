@@ -17,3 +17,5 @@ When changes variable envoirement to producction, that application only need one
 Uses MongoDB, with [mongoose](https://github.com/Automattic/mongoose).
 
 Im trying to use continuos ES6, whit babel, if not please tell me.
+{para translate}
+necesito incluir twitter Rest, login,,,....

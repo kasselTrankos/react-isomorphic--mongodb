@@ -2,6 +2,7 @@ import https from "https";
 import koa from "koa";
 import proxy from "koa-proxy";
 import serve from "koa-static";
+import bodyParser from 'koa-body-parser';
 import session from "koa-session";
 import {Twitter} from "common/Twitter"
 import {MongoDB} from "common/MongoDB";
@@ -22,6 +23,7 @@ const port     = process.env.PORT || 8001;
 
 
 app.keys = ['some secret hurr'];
+app.use(bodyParser());
 app.use(serve("static", {defer: true}));
 app.use(serve("bower_components/bootstrap/dist"), {defer:true});
 app.use(session(app));
@@ -40,10 +42,11 @@ app.use(function *(next) {
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
 	////juntando promises and yield looks great
+	//primero obtengo el acceso
 	yield access_token = access_token;
-	console.log(access_token, ' by here ibn cliente 	');
+
 	yield ((callback) => {
-				let twitterResponse = Twitter.use(this, location);
+			let twitterResponse =  Twitter.use(this, location);
 
 		match({routes, location}, (error, redirectLocation, renderProps) => {
 
@@ -57,7 +60,7 @@ app.use(function *(next) {
 				callback(error);
 				return;
 			}
-
+			console.log(location, ' SERVER ONLY case');
 			Transmit.renderToString(RoutingContext, renderProps).then(({reactString, reactData}) => {
 				if(twitterResponse!==null) {
 					twitterResponse.map((item)=>{
@@ -71,7 +74,7 @@ app.use(function *(next) {
 						<head>
 							<meta charset="utf-8">
 							<title>react-isomorphic-starterkit</title>
-							<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+							<link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
 							<link rel="shortcut icon" href="/favicon.ico">
 						</head>
 						<body>

@@ -1,5 +1,6 @@
 import React from "react";
 import Transmit from "react-transmit";
+import TwitterNewUser from "./TwitterNewUser";
 import {Vars} from "../../common/Common";
 
 class Twitter extends React.Component {
@@ -7,30 +8,20 @@ class Twitter extends React.Component {
   }
   render() {
     return (
-      <form className="form-inline">
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Usuario o Email</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Email" />
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail2">Email</label>
-          <input type="email" className="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com"/>
-        </div>
-        <button type="submit" className="btn btn-default">Submit</button>
-      </form>
+      <TwitterNewUser></TwitterNewUser>
     );
   }
 }
 
 export default Transmit.createContainer(Twitter, {
+
 	initialVariables: {
+    host: Vars.host()
 	},
 	fragments: {
-		twitterSession () {
-      let host = Vars.host();
-      //
-			let urlSession = `${host}/twitter`;
-			return fetch(
+    twitterUserTimeline({host}){
+      let urlSession = `${host}/twitter/statuses/user_timeline`;
+      return fetch(
 				urlSession
 			).then((response) => response.json()).then((body) => {
 
@@ -38,6 +29,6 @@ export default Transmit.createContainer(Twitter, {
 			}).catch((error) => {
 				console.error(error);
 			});
-		}
+    }
 	}
 });

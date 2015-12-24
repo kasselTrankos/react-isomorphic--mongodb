@@ -11,7 +11,6 @@ var TwitterTokenModel = mongoose.model('TwitterToken', TwitterToken);
 const MongoDB = {
   saveAccessToken(access_token, callback){
     var deferred = Q.defer();
-
     TwitterTokenModel.update(
       {access_token: access_token},
       {$setOnInsert: {access_token: access_token}},
@@ -34,6 +33,10 @@ const MongoDB = {
     });
     deferred.promise.nodeify(callback);
     return deferred.promise;
+  },
+  insertNewAccount(accountName){
+    
   }
+
 }
 export {MongoDB}

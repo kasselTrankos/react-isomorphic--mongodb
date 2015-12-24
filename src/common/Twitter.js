@@ -31,8 +31,9 @@ const Twitter = {
     //return {hh:10};
   },
   use(koa, location){
-    if(/^\/twitter$/i.test(location.pathname)){
-      if(koa.request.method==='GET')  return __Twitter.Get(koa);
+    if(/^\/twitter/i.test(location.pathname)){
+      if(koa.request.method==='GET')  return __Twitter.Get(koa, location);
+      if(koa.request.method==='POST')  return __Twitter.Post(koa, location);
     }
     return null;
   },
@@ -49,7 +50,7 @@ const Twitter = {
         if(!error){
           deferred.resolve(access_token);
         }else{
-          deferred.reject("Houston from getOAuthAccessToken, file Twitter", error);
+          deferred.reject("Houston Twitter.getOAuthAccessToken, common/Twitter", error);
         }
     });
     deferred.promise.nodeify(callback);
@@ -57,13 +58,24 @@ const Twitter = {
   }
 }
 const __Twitter = {
-  Get(koa){
+  Get(koa, location){
     let twitterResponse = [
         {name: 'Hello World', id:1},
         {name: 'Juan Palomo', id:2}
       ];
     koa.body = twitterResponse;
     return twitterResponse;
+  },
+  Post(koa, location){
+    console.log(koa.request, ' SERVER CALLE', koa.request.body);
+    if(/\/twitter\/account$/i){
+      let twitterResponse = [
+          {name: 'Hello World in spana', id:1},
+          {name: 'Juan Palomo', id:2}
+        ];
+      koa.body = twitterResponse;
+      return twitterResponse;
+    }
   },
   getTimeline(access_token, screen_name, callback){
     var deferred = Q.defer();

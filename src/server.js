@@ -4,6 +4,7 @@ import proxy from "koa-proxy";
 import serve from "koa-static";
 import session from "koa-session";
 import {Twitter} from "common/Twitter"
+import {MongoDB} from "common/MongoDB";
 
 import React from "react";
 import ReactDOM from "react-dom/server";
@@ -30,15 +31,33 @@ app.use(proxy({
 	match: /^\/api\/github\//i,
 	map: (path) => path.replace(/^\/api\/github\//i, "/")
 }));
-Twitter.OAuth();
+let access_token = null;
+MongoDB.findAccessTokenPrevious()
+	.then((doc)=>{
+
+		if(doc){console.log(doc);
+			access_token = doc.access_token;
+		}else{
+			Twitter.OAuth()
+			.then((accessToken)=>{
+				access_token = accessToken
+			})
+			.catch((err)=>{
+				console.log("errror cuando intento conectarme a outh", err);
+			});
+		}
+	})
+	.catch((err)=>{
+		console.log('Existe previo', err);
+	});
+
+
 app.use(function *(next) {
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
 
 	yield ((callback) => {
-
-
-		let twitterResponse = Twitter.use(this, location);
+				let twitterResponse = Twitter.use(this, location);
 
 		match({routes, location}, (error, redirectLocation, renderProps) => {
 

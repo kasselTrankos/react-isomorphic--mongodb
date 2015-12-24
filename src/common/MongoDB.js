@@ -8,6 +8,11 @@ var TwitterToken = new Schema({
   date: { type: Date, default: Date.now }
 });
 var TwitterTokenModel = mongoose.model('TwitterToken', TwitterToken);
+var TwitterAccount = new Schema({
+  account:{ type: String, default: '', index:true },
+  date: { type: Date, default: Date.now }
+});
+var TwitterAccountModel = mongoose.model('TwitterAccount', TwitterAccount);
 const MongoDB = {
   saveAccessToken(access_token, callback){
     var deferred = Q.defer();
@@ -15,7 +20,6 @@ const MongoDB = {
       {access_token: access_token},
       {$setOnInsert: {access_token: access_token}},
       {upsert: true}, function (err, rowsAffected) {
-      console.log(access_token);
       if(err)
         deferred.reject("Houston from MongoDB.saveAccessToken, file common/MongoDB", err);
 
@@ -34,8 +38,19 @@ const MongoDB = {
     deferred.promise.nodeify(callback);
     return deferred.promise;
   },
-  insertNewAccount(accountName){
-    
+  insertNewAccount(accountName, callback){
+    var deferred = Q.defer();
+    TwitterAccountModel.update(
+      accountName,
+      {$setOnInsert: accountName},
+      {upsert: true}, function (err, rowsAffected) {
+        console.log(err, accountName);
+      if(err)
+        deferred.reject("Houston from MongoDB.saveAccessToken, file common/MongoDB", err);
+      deferred.resolve([accountName, rowsAffected]);
+    });
+    deferred.promise.nodeify(callback);
+    return deferred.promise;
   }
 
 }

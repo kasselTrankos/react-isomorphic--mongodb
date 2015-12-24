@@ -44,9 +44,12 @@ app.use(function *(next) {
 	////juntando promises and yield looks great
 	//primero obtengo el acceso
 	yield access_token = access_token;
+	///ahora otro yield, joder como simplfica todo esto!!!. gracias!!
+	let twitterResponse =  Twitter.proxy(this, location);
+	yield twitterResponse = twitterResponse;
 
 	yield ((callback) => {
-			let twitterResponse =  Twitter.use(this, location);
+
 
 		match({routes, location}, (error, redirectLocation, renderProps) => {
 
@@ -62,7 +65,7 @@ app.use(function *(next) {
 			}
 			console.log(location, ' SERVER ONLY case');
 			Transmit.renderToString(RoutingContext, renderProps).then(({reactString, reactData}) => {
-				if(twitterResponse!==null) {
+				if(!twitterResponse.void) {
 					twitterResponse.map((item)=>{
 						reactData.push(item);
 					});

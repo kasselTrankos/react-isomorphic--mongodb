@@ -30,12 +30,12 @@ const Twitter = {
     });
     //return {hh:10};
   },
-  use(koa, location){
+  proxy(koa, location){
     if(/^\/twitter/i.test(location.pathname)){
       if(koa.request.method==='GET')  return __Twitter.Get(koa, location);
       if(koa.request.method==='POST')  return __Twitter.Post(koa, location);
     }
-    return null;
+    return {void: true};
   },
   OAuth(callback){
     var deferred = Q.defer();
@@ -67,14 +67,18 @@ const __Twitter = {
     return twitterResponse;
   },
   Post(koa, location){
-    console.log(koa.request, ' SERVER CALLE', koa.request.body);
+    let postedVariables = koa.request.body;
     if(/\/twitter\/account$/i){
-      let twitterResponse = [
-          {name: 'Hello World in spana', id:1},
-          {name: 'Juan Palomo', id:2}
-        ];
-      koa.body = twitterResponse;
-      return twitterResponse;
+      return MongoDB.insertNewAccount(postedVariables)
+      .then((accountName, rowsAffected)=>{
+        console.log(accountName, rowsAffected, ' PROMESA');
+        let twitterResponse = [
+            postedVariables
+          ];
+        koa.body = twitterResponse;
+        return twitterResponse;
+      });
+
     }
   },
   getTimeline(access_token, screen_name, callback){

@@ -35,9 +35,8 @@ app.use(function *(next) {
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
 
 	if(/^\/twitter/i.test(location.pathname))
-	{
 		this.body = yield Twitter.proxy(this, location);
-	}
+
 
 	yield ((callback) => {
 

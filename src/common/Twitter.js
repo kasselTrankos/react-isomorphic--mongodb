@@ -1,6 +1,7 @@
 var OAuth = require('oauth');
 import https from "https";
 import {MongoDB} from "./MongoDB";
+import {Query} from "./lib/TwitterQuery"
 import Q from "q";
 
 const twitterConsumerKey = 'YcsBUJYAH5LYXUkFFHJWQxqIk';
@@ -9,11 +10,13 @@ const Twitter = {
   Token(){
     return this.getAccessToken();
   },
-
   proxy(koa, location){
-      return [{account: 'pedro', _id: 1}];
-      /*if(koa.request.method==='GET')  return __Twitter.Get(koa, location);
-      if(koa.request.method==='POST')  return __Twitter.Post(koa, location);*/
+      if(koa.request.method==='GET')
+        return Query.Get(koa, location.pathname);
+
+
+      if(koa.request.method==='POST')
+        return __Twitter.Post(koa, location.pathname);
 
   }
 }

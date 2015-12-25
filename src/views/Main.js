@@ -22,7 +22,7 @@ export default class Main extends React.Component {
 		return (
 			<div className="row">
 			<br />no hay?
-				
+
 			</div>
 		);
 	}

@@ -3,26 +3,13 @@ import {MongoDB} from "./../MongoDB";
 import Q from "q";
 
 const Query = {
-  Get(koa, location){
-    if(/^\/twitter\/account$/i.test(location.pathname)){
-      let twitterResponse = [
-          {name: 'Hello World y antonio', id:1},
-          {name: 'Juan Palomo', id:2}
-        ];
-      koa.body = twitterResponse;
-      return twitterResponse;
+  Get(koa, pathname)
+  {
+    if(/^\/twitter\/accounts$/i.test(pathname)){
       return MongoDB.getAllTwitterAccounts()
       .then((docs)=>{
-        koa.body = docs;
         return docs;
       });
-    }else{
-      let twitterResponse = [
-          {name: 'Hello World', id:1},
-          {name: 'Juan Palomo', id:2}
-        ];
-      koa.body = twitterResponse;
-      return twitterResponse;
     }
   },
   Post(koa, location){

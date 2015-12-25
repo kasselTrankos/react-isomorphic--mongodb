@@ -51,7 +51,17 @@ const MongoDB = {
     });
     deferred.promise.nodeify(callback);
     return deferred.promise;
+  },
+  getAllTwitterAccounts(callback){
+    var deferred = Q.defer();
+    TwitterAccountModel.find({}, 'account', (err, docs) =>{
+      if(err)
+        deferred.reject("Houston from MongoDB.getAllTwitterAccounts, file common/MongoDB", err);
+      
+      deferred.resolve(docs);
+    });
+    deferred.promise.nodeify(callback);
+    return deferred.promise;
   }
-
 }
 export {MongoDB}

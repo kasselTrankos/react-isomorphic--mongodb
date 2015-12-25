@@ -4,8 +4,6 @@ import proxy from "koa-proxy";
 import serve from "koa-static";
 import bodyParser from 'koa-body-parser';
 import session from "koa-session";
-import {Twitter} from "common/Twitter"
-import {MongoDB} from "common/MongoDB";
 
 import React from "react";
 import ReactDOM from "react-dom/server";
@@ -28,25 +26,13 @@ app.use(serve("static", {defer: true}));
 app.use(serve("bower_components/bootstrap/dist"), {defer:true});
 app.use(session(app));
 
-app.use(proxy({
-	host: "https://api.github.com",
-	match: /^\/api\/github\//i,
-	map: (path) => path.replace(/^\/api\/github\//i, "/")
-}));
-
-let access_token = Twitter.Token();
-
+let twitterResponse = null;
 
 app.use(function *(next) {
 
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
-	////juntando promises and yield looks great
-	//primero obtengo el acceso
-	yield access_token = access_token;
-	///ahora otro yield, joder como simplfica todo esto!!!. gracias!!
-	let twitterResponse =  Twitter.proxy(this, location);
-	yield twitterResponse = twitterResponse;
+
 
 	yield ((callback) => {
 
@@ -63,14 +49,10 @@ app.use(function *(next) {
 				callback(error);
 				return;
 			}
-			console.log(location, ' SERVER ONLY case');
-			Transmit.renderToString(RoutingContext, renderProps).then(({reactString, reactData}) => {
-				if(!twitterResponse.void) {
-					twitterResponse.map((item)=>{
-						reactData.push(item);
-					});
 
-				}
+			Transmit.renderToString(RoutingContext, renderProps).then(({reactString, reactData}) => {
+
+
 				let template = (
 						`<!doctype html>
 					<html lang="en-us">

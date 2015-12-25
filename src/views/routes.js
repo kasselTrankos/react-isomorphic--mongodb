@@ -1,7 +1,6 @@
 import Base from "views/Base";
 import Main from "views/Main";
 import About from "views/About";
-import Twitter from "views/Twitter";
 import TwitterNewAccount from "views/TwitterNewAccount"
 import React from "react";
 import {Router, Route} from "react-router";

@@ -1,34 +1,19 @@
 import React from "react";
 import Transmit from "react-transmit";
 import TwitterNewUser from "./TwitterNewUser";
+import TwitterAccounts from "./TwitterAccounts";
 import {Vars} from "../../common/Common";
 
-class Twitter extends React.Component {
+export default class Twitter extends React.Component {
   componentWillMount(){
   }
   render() {
     return (
-      <TwitterNewUser></TwitterNewUser>
+      <div className="row">
+        <TwitterNewUser></TwitterNewUser>
+      
+        <TwitterAccounts></TwitterAccounts>
+      </div>
     );
   }
 }
-
-export default Transmit.createContainer(Twitter, {
-
-	initialVariables: {
-    host: Vars.host()
-	},
-	fragments: {
-    twitterUserTimeline({host}){
-      let urlSession = `${host}/twitter/statuses/user_timeline`;
-      return fetch(
-				urlSession
-			).then((response) => response.json()).then((body) => {
-
-				return body;
-			}).catch((error) => {
-				console.error(error);
-			});
-    }
-	}
-});

@@ -59,19 +59,32 @@ const Twitter = {
 }
 const __Twitter = {
   Get(koa, location){
-    let twitterResponse = [
-        {name: 'Hello World', id:1},
-        {name: 'Juan Palomo', id:2}
-      ];
-    koa.body = twitterResponse;
-    return twitterResponse;
+    if(/^\/twitter\/account$/i.test(location.pathname)){
+      let twitterResponse = [
+          {name: 'Hello World y antonio', id:1},
+          {name: 'Juan Palomo', id:2}
+        ];
+      koa.body = twitterResponse;
+      return twitterResponse;
+      return MongoDB.getAllTwitterAccounts()
+      .then((docs)=>{
+        koa.body = docs;
+        return docs;
+      });
+    }else{
+      let twitterResponse = [
+          {name: 'Hello World', id:1},
+          {name: 'Juan Palomo', id:2}
+        ];
+      koa.body = twitterResponse;
+      return twitterResponse;
+    }
   },
   Post(koa, location){
     let postedVariables = koa.request.body;
-    if(/\/twitter\/account$/i){
+    if(/\/twitter\/account$/i.test(location.pathname)){
       return MongoDB.insertNewAccount(postedVariables)
       .then((accountName, rowsAffected)=>{
-        console.log(accountName, rowsAffected, ' PROMESA');
         let twitterResponse = [
             postedVariables
           ];

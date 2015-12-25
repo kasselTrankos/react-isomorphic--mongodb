@@ -13,7 +13,7 @@ class TwitterNewAccount extends React.Component {
       <div className="row">
       <ul className="list-group">
       {accounts && accounts.map((account) =>
-        <li key={account._id}>{account.account}</li>
+        <li key={account._id} className="list-group-item">{account.account}</li>
       )}
       </ul>
 

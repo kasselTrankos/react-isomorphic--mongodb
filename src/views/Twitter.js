@@ -1,25 +1,28 @@
 import React from "react";
 import __fetch from "isomorphic-fetch";
 import Transmit from "react-transmit";
-import {Vars} from "../../common/Common";
-export default class TwitterAccounts extends React.Component{
+import {Vars} from "../common/Common";
+import {Account} from "../components/twitter/Account";
 
-  render(){
+class Twitter extends React.Component {
+
+
+
+  render() {
     const {accounts} = this.props;
-
     return (
       <div className="row">
-        <ul className="list-group">
-          {accounts && accounts.map((account) =>
-          <li key={account._id} className="list-group-item">{account.account}</li>
-          )}
+      <ul className="list-group">
+      {accounts && accounts.map((account) =>
+        <Account key={account._id} account={{account}}></Account>
+      )}
       </ul>
 
       </div>
     );
   }
-}/*
-export default Transmit.createContainer(TwitterAccounts, {
+}
+export default Transmit.createContainer(Twitter, {
 	initialVariables: {
     host: Vars.host()
 	},
@@ -36,4 +39,3 @@ export default Transmit.createContainer(TwitterAccounts, {
 		}
 	}
 });
-*/

@@ -16,16 +16,10 @@ const Twitter = {
     return Query.get('/twitter/accounts').then(function(koa){
       return MongoDB.getAllTwitterAccounts()
     }).then((docs)=>{
-      console.log(docs, 'o lo tengo o me patrece a mi!');
       return docs;
     }).catch(function(){
       console.log('no route founded!');
     });
-        /*
-
-      if(koa.request.method==='POST')
-        return __Twitter.Post(koa, location.pathname);
-        */
   }
 }
 

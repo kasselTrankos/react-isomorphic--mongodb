@@ -7,26 +7,27 @@ const Query = {
   koa:null,
   url:'',
   get(path, callback){
-    console.log(this.koa.request.method);
+    return this.query(path, 'GET', callback);
+  },
+  post(path, callback){
+    return this.query(path, 'POST', callback);
+  },
+  query(path, type, callback){
     var deferred = Q.defer();
     //acabo de pensar en el orden logico de condicional, si esto no es pensar!!!, break!
-    
-    if(!this.koa.request.method==='GET' || !this.route(path))
+    if(!this.koa.request.method.toUpperCase()===type || !this.route(path))
       deferred.reject("no route trued:", path);
     else
       deferred.resolve(this.koa);
 
     deferred.promise.nodeify(callback);
     return deferred.promise;
-
   },
   route(pattern) {
     var urlParts = this.url.split("/");
     var param = [];
     var currentRoute = null;
-    console.log(pattern, 'pp', this.url);
 
-    var match = true;
     var patternSplit = pattern.split("/");
     if (urlParts.length === patternSplit.length) {
       for (var i = 0, l = urlParts.length;i<l;i++) {
@@ -46,17 +47,8 @@ const Query = {
 
 
     return true;
-  }
-  /*
-  Get(koa, pathname)
-  {
-    if(/^\/twitter\/accounts$/i.test(pathname)){
-      return MongoDB.getAllTwitterAccounts()
-      .then((docs)=>{
-        return docs;
-      });
-    }
   },
+  /*
   Post(koa, location){
     let postedVariables = koa.request.body;
     if(/\/twitter\/account$/i.test(location.pathname)){

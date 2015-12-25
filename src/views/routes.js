@@ -1,7 +1,7 @@
-import Base from "views/Base";
-import Main from "views/Main";
-import About from "views/About";
-import TwitterNewAccount from "views/TwitterNewAccount"
+import Base from "./Base";
+import Main from "./Main";
+import About from "./About";
+import Twitter from "./Twitter"
 import React from "react";
 import {Router, Route} from "react-router";
 
@@ -11,9 +11,9 @@ import {Router, Route} from "react-router";
 export default (
 	<Router>
 		<Route component={Base}>
-			<Route path="/" components={{main:Main, twitter: TwitterNewAccount} }/>
+			<Route path="/" components={{main:Main, twitter: Twitter} }/>
 			<Route path="about" component={About}/>
-			<Route path="/new/twitter/user_timeline" component={TwitterNewAccount}/>
+			<Route path="/new/twitter/user_timeline" component={Twitter}/>
 		</Route>
 	</Router>
 );

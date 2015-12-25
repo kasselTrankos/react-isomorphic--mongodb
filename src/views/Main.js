@@ -9,20 +9,11 @@ import {Vars} from "../common/Common"
  */
 export default class Main extends React.Component {
 
-
-	/**
-	 * Runs on server and client.
-	 */
 	render () {
-		/**
-		 * This is a Transmit fragment.
-		 */
-
-
 		return (
 			<div className="row">
-			<br />no hay?
-
+			<br />
+			no hay?
 			</div>
 		);
 	}

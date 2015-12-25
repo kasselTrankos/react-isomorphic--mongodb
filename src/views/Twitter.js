@@ -2,7 +2,7 @@ import React from "react";
 import __fetch from "isomorphic-fetch";
 import Transmit from "react-transmit";
 import {Vars} from "../common/Common";
-import {Account} from "../components/twitter/Account";
+import {Account, NewAccountForm} from "../components/twitter/Account";
 
 class Twitter extends React.Component {
 
@@ -12,12 +12,16 @@ class Twitter extends React.Component {
     const {accounts} = this.props;
     return (
       <div className="row">
-      <ul className="list-group">
-      {accounts && accounts.map((account) =>
-        <Account key={account._id} account={{account}}></Account>
-      )}
-      </ul>
-
+        <div className="row">
+          <NewAccountForm></NewAccountForm>
+        </div>
+        <div className="row">
+          <ul className="list-group">
+          {accounts && accounts.map((account) =>
+            <Account key={account._id} account={{account}}></Account>
+          )}
+          </ul>
+        </div>
       </div>
     );
   }

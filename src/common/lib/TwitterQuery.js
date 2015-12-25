@@ -23,8 +23,8 @@ const Query = {
     deferred.promise.nodeify(callback);
     return deferred.promise;
   },
-  route(pattern) {
-    var urlParts = this.url.split("/");
+  route(pattern, url) {
+    var urlParts = url.split("/");
     var param = [];
     var currentRoute = null;
 

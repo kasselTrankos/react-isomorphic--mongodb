@@ -10,9 +10,12 @@ const Account = React.createClass({
   }
 });
 const NewAccountForm = React.createClass({
+  componentWillMount(){
+		console.log('koko', this.props.location, ' CLIENT');
+	},
   render(){
     return (
-      <Form className="form-inline" method="POST" to="/twitter/user_timeline">
+      <Form className="form-inline" method="POST" to="/twitter/account">
       <div className="form-group">
         <label htmlFor="account">Twitter User name</label>
         <input type="text" className="form-control" id="account" placeholder="Twitter User name" />
@@ -21,5 +24,10 @@ const NewAccountForm = React.createClass({
     </Form>)
   }
 });
+const SaveAccount = React.createClass({
+  render(){
+    return(<p>cualo?</p>)
+  }
+});
 
-export {Account};
+export {Account, NewAccountForm, SaveAccount};

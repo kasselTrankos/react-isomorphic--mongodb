@@ -57,8 +57,8 @@ const MongoDB = {
     TwitterAccountModel.find({}, 'account', (err, docs) =>{
       if(err)
         deferred.reject("Houston from MongoDB.getAllTwitterAccounts, file common/MongoDB", err);
-      
-      deferred.resolve(docs);
+      else
+        deferred.resolve(docs);
     });
     deferred.promise.nodeify(callback);
     return deferred.promise;

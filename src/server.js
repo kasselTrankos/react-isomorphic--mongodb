@@ -13,7 +13,7 @@ import Transmit from "react-transmit";
 
 import routes from "views/routes";
 
-import {Twitter} from './common/Twitter'
+import Twitter from './common/Twitter'
 
 
 const app      = koa();
@@ -26,6 +26,7 @@ app.use(bodyParser());
 app.use(serve("static", {defer: true}));
 app.use(serve("bower_components/bootstrap/dist"), {defer:true});
 app.use(session(app));
+app.use(Twitter(app));
 
 let twitterResponse = null;
 
@@ -34,8 +35,8 @@ app.use(function *(next) {
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
 
-	if(/^\/twitter/i.test(location.pathname))
-		this.body = yield Twitter.proxy(this, location);
+	/*if(/^\/twitter/i.test(location.pathname))
+		this.body = yield Twitter.proxy(this, location);*/
 
 
 	yield ((callback) => {
@@ -71,7 +72,7 @@ app.use(function *(next) {
 						</body>
 					</html>`
 				);
-				console.log('--------------------',reactData, '-------------------');
+				
 				this.type = "text/html";
 				this.body = Transmit.injectIntoMarkup(template, reactData, [`${webserver}/dist/client.js`]);
 

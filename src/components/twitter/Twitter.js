@@ -11,8 +11,6 @@ export default class Twitter extends React.Component {
     return (
       <div className="row">
         <TwitterNewUser></TwitterNewUser>
-      
-        <TwitterAccounts></TwitterAccounts>
       </div>
     );
   }

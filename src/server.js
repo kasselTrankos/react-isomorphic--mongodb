@@ -13,6 +13,7 @@ import Transmit from "react-transmit";
 
 import routes from "views/routes";
 
+import {Twitter} from './common/Twitter'
 
 
 const app      = koa();
@@ -33,6 +34,11 @@ app.use(function *(next) {
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
 
+	if(/^\/twitter/i.test(location.pathname)){
+		console.log('IN MY SERVER TELL ME THIS', location.pathname,/^\/twitter/i.test(location.pathname));
+		this.body = Twitter.proxy(koa, location);
+
+	}
 
 	yield ((callback) => {
 
@@ -49,6 +55,7 @@ app.use(function *(next) {
 				callback(error);
 				return;
 			}
+			console.log(location.pathname);
 
 			Transmit.renderToString(RoutingContext, renderProps).then(({reactString, reactData}) => {
 
@@ -67,7 +74,7 @@ app.use(function *(next) {
 						</body>
 					</html>`
 				);
-
+				console.log('--------------------',reactData, '-------------------');
 				this.type = "text/html";
 				this.body = Transmit.injectIntoMarkup(template, reactData, [`${webserver}/dist/client.js`]);
 

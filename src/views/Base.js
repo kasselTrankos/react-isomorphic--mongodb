@@ -4,6 +4,7 @@ import Twitter from "../components/twitter/Twitter";
 
 export default class Base extends React.Component {
   render() {
+    const { main, twitter } = this.props;
     return (
       <div className="row">
         <div className="row">
@@ -13,7 +14,11 @@ export default class Base extends React.Component {
         </div>
         <div className="row">
           <div className="col-xs-2">&nbsp;</div>
-          <div className="col-xs-8"><Twitter></Twitter></div>
+          <div className="col-xs-8">
+            {twitter}
+            {main}
+
+          </div>
           <div className="col-xs-2">&nbsp;</div>
         </div>
         <div className="row">

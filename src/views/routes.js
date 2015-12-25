@@ -11,7 +11,7 @@ import {Router, Route} from "react-router";
 export default (
 	<Router>
 		<Route component={Base}>
-			<Route path="/" component={Main} />
+			<Route path="/" components={{main:Main, twitter: TwitterNewAccount} }/>
 			<Route path="about" component={About}/>
 			<Route path="/new/twitter/user_timeline" component={TwitterNewAccount}/>
 		</Route>

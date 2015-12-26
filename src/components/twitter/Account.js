@@ -15,7 +15,7 @@ const NewAccountForm = React.createClass({
 	},
   render(){
     return (
-      <Form className="form-inline" method="POST" to="/twitter/account">
+      <Form className="form-inline" method="POST" to="/twitter/new/account">
       <div className="form-group">
         <label htmlFor="account">Twitter User name</label>
         <input type="text" className="form-control" id="account" placeholder="Twitter User name" />

@@ -7,8 +7,9 @@ import {Account, NewAccountForm} from "../components/twitter/Account";
 class Twitter extends React.Component {
 
 
-
   render() {
+    if(__CLIENT__) console.log(" TWITTER c");
+    if(__SERVER__) console.log("TWITTER s")
     const {accounts} = this.props;
     return (
       <div className="row">
@@ -32,6 +33,7 @@ export default Transmit.createContainer(Twitter, {
 	},
 	fragments: {
 		accounts ({host}) {
+      console.log('HOST', host);
 			let url = `${host}/twitter/accounts`;
 			return fetch(
 				url

@@ -11,9 +11,10 @@ import {Router, Route} from "react-router";
 export default (
 	<Router>
 		<Route component={Base}>
-			<Route path="/" components={{main:Main, twitter: Twitter}}/>
-			<Route path="about" component={About}/>
-			<Route path="/twitter/account" components={{main:Main, twitter: Twitter}}/>
+		<Route path="about" component={About}/>
+			<Route path="/" component={Twitter}/>
+
+
 		</Route>
 	</Router>
 );

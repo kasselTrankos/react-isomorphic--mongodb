@@ -27,7 +27,7 @@ export default Transmit.createContainer(TwitterNewAccount, {
 	},
 	fragments: {
 		accounts ({host}) {
-			let url = `${host}/twitter/accounts`;
+			let url = `${host}/twitter/acuuiucounts`;
 			return fetch(
 				url
 			).then((response) => response.json()).then((body) => {

@@ -3,7 +3,8 @@ import {MainMenu} from "../components/MainMenu";
 
 export default class Base extends React.Component {
   render() {
-    const { main, twitter } = this.props;
+    console.log(' FROM BASE');
+    const {main, twitter} = this.props;
     return (
       <div className="row">
         <div className="row">
@@ -13,9 +14,10 @@ export default class Base extends React.Component {
         </div>
         <div className="row">
           <div className="col-xs-2">&nbsp;</div>
-          <div className="col-xs-8">
-            {twitter}
+          <div className="col-xs-8">---
             {main}
+            {twitter}
+            ---
           </div>
           <div className="col-xs-2">&nbsp;</div>
         </div>

@@ -35,8 +35,6 @@ app.use(function *(next) {
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
 
-	/*if(/^\/twitter/i.test(location.pathname))
-		this.body = yield Twitter.proxy(this, location);*/
 
 
 	yield ((callback) => {
@@ -56,7 +54,7 @@ app.use(function *(next) {
 			}
 
 			Transmit.renderToString(RoutingContext, renderProps).then(({reactString, reactData}) => {
-
+				console.log(' LOCATION SO RENDER IT', location);
 
 				let template = (
 						`<!doctype html>
@@ -72,7 +70,7 @@ app.use(function *(next) {
 						</body>
 					</html>`
 				);
-				
+
 				this.type = "text/html";
 				this.body = Transmit.injectIntoMarkup(template, reactData, [`${webserver}/dist/client.js`]);
 

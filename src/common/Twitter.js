@@ -20,12 +20,13 @@ const Twitter = (opts, app)=>{
         method:'GET',
         middleware: function (){
           let ctx = this;
-          MongoDB.getAllTwitterAccounts()
+          ctx.body=[{account: 'alvaro', _id:1}];
+          /*MongoDB.getAllTwitterAccounts()
            .then((docs)=>{
              ctx.body = docs;
            }).catch(function(e){
              console.log('no route founded!/twitter/accounts', e);
-           })
+           })*/
         }
 
       }
@@ -34,7 +35,7 @@ const Twitter = (opts, app)=>{
 
   proxy();
   return function* (next){
-
+    console.log('¿==¿');
     // make sessionOptions independent in each request
     yield* serveTwitter(this, opts);
     //yield* next;
@@ -50,7 +51,7 @@ const Twitter = (opts, app)=>{
 function serveTwitter(ctx, opts, app){
 
   let i=0, l=opts.uses.length;
-
+  console.log(ctx.request.url);
   for(i;i<l;i++){
 
     if(ctx.request.method===opts.uses[i].method &&

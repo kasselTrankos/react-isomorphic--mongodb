@@ -14,7 +14,7 @@ import Transmit from "react-transmit";
 import routes from "views/routes";
 
 import Twitter from './common/Twitter'
-
+import {MongoDB} from './common/MongoDB'
 
 const app      = koa();
 const hostname = process.env.HOSTNAME || "localhost";
@@ -31,15 +31,30 @@ app
   .use(router.routes())
   .use(router.allowedMethods());
 
-Twitter(router);
+//Twitter(router);
 let twitterResponse = null;
 
 app.use(function *(next) {
-
+  //let ctx = this;
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
-  console.log(this.request, ' where is the body?');
+
+
+  if(location.pathname==='/twitter/accounts'){
+    try{
+      this.body = yield MongoDB.getAllTwitterAccounts().then((docs)=>{
+        return docs;
+      }).catch(function(e){
+        console.log('no route founded!/twitter/accounts', e);
+      })
+    }catch(e){
+      console.log('exception',e);
+    }
+    //this.body=[{account: 'alwais', _id:1}]
+  }
 	yield ((callback) => {
+
+
 
 		match({routes, location}, (error, redirectLocation, renderProps) => {
 

@@ -17,7 +17,7 @@ export default class Base extends React.Component {
           <div className="col-xs-8">---
             {main}
             {twitter}
-            ---
+
           </div>
           <div className="col-xs-2">&nbsp;</div>
         </div>

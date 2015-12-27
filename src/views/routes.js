@@ -2,6 +2,7 @@ import Base from "./Base";
 import Main from "./Main";
 import About from "./About";
 import Twitter from "./Twitter"
+import SaveAccount from "./SaveAccount";
 import React from "react";
 import {Router, Route} from "react-router";
 
@@ -11,8 +12,10 @@ import {Router, Route} from "react-router";
 export default (
 	<Router>
 		<Route component={Base}>
+		<Route path="/" components={{main:Main , twitter:Twitter}}/>
+		<Route path="/twitter/account" components={{main:Main,  twitter:Twitter}}/>
 		<Route path="about" component={About}/>
-			<Route path="/" component={Twitter}/>
+
 
 
 		</Route>

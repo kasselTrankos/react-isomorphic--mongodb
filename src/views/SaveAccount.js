@@ -4,27 +4,17 @@ import Transmit from "react-transmit";
 import {Vars} from "../common/Common";
 import {Account, NewAccountForm} from "../components/twitter/Account";
 
-class Twitter extends React.Component {
+class SaveAccount extends React.Component {
+
 
   render() {
     const {accounts} = this.props;
     return (
-      <div className="row">
-        <div className="row">
-          <NewAccountForm></NewAccountForm>
-        </div>
-        <div className="row">
-          <ul className="list-group">
-          {accounts && accounts.map((account) =>
-            <Account key={account._id} account={{account}}></Account>
-          )}
-          </ul>
-        </div>
-      </div>
+      <p>Salvado</p>
     );
   }
 }
-export default Transmit.createContainer(Twitter, {
+export default Transmit.createContainer(SaveAccount, {
 	initialVariables: {
     host: Vars.host()
 	},
@@ -32,7 +22,13 @@ export default Transmit.createContainer(Twitter, {
 		accounts ({host}) {
 			let url = `${host}/twitter/accounts`;
 			return fetch(
-				url
+				url, {
+          method: 'POST',
+          body: JSON.stringify({
+            account: document.getElementById("account").value,
+            pass: 'bar'
+          })
+        }
 			).then((response) => response.json()).then((body) => {
 				return body;
 			}).catch((error) => {

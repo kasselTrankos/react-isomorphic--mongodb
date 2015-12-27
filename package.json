@@ -32,6 +32,7 @@
     "koa": "^1.1.2",
     "koa-body-parser": "^1.1.2",
     "koa-proxy": "^0.4.1",
+    "koa-router": "^5.3.0",
     "koa-session": "^3.3.1",
     "koa-static": "^1.5.2",
     "mongodb": "^2.1.2",

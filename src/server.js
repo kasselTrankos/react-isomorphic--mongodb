@@ -4,7 +4,7 @@ import proxy from "koa-proxy";
 import serve from "koa-static";
 import bodyParser from 'koa-body-parser';
 import session from "koa-session";
-
+var router = require('koa-router')();
 import React from "react";
 import ReactDOM from "react-dom/server";
 import {RoutingContext, match} from "react-router";
@@ -26,19 +26,20 @@ app.use(bodyParser());
 app.use(serve("static", {defer: true}));
 app.use(serve("bower_components/bootstrap/dist"), {defer:true});
 app.use(session(app));
-app.use(Twitter(app));
 
+app
+  .use(router.routes())
+  .use(router.allowedMethods());
+
+Twitter(router);
 let twitterResponse = null;
 
 app.use(function *(next) {
 
 	const location = createLocation(this.path);
 	const webserver = process.env.NODE_ENV === "production" ? "" : "//" + hostname + ":8080";
-
-
-
+  console.log(this.request, ' where is the body?');
 	yield ((callback) => {
-
 
 		match({routes, location}, (error, redirectLocation, renderProps) => {
 
@@ -54,7 +55,7 @@ app.use(function *(next) {
 			}
 
 			Transmit.renderToString(RoutingContext, renderProps).then(({reactString, reactData}) => {
-				console.log(' LOCATION SO RENDER IT', location);
+
 
 				let template = (
 						`<!doctype html>
